@@ -40,8 +40,9 @@ for index, row in r1.iterrows():
     refresh_excel()
     dt1 = dt.datetime.now().strftime("%Y""%m""%d")
     dt2 = dt.datetime.now().strftime("%d-%b-%Y")
-    time = dt.datetime.now().strftime('%H%M%S')
+
     time1 = dt.datetime.now().strftime('%H:%M:%S')
+    time = time1.replace(':','')
 
     df_master= pd.read_excel('C:\\NSE\\outputs\Masters.xlsx', index_col=None)
     df_master.columns = \
