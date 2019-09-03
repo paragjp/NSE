@@ -8,7 +8,7 @@ def format_masters():
     ws = book.Worksheets("Sheet1")
     ws.Columns.NumberFormat = "###,##0.00"
     ws.Columns.AutoFit()
-    ws.Range("A1:N1").Interior.ColorIndex = 20
+    ws.Range("A1:Y1").Interior.ColorIndex = 20
     book.Save()
     book.Close()
     Xlsx.Quit()
