@@ -8,6 +8,7 @@ def read_watchlist(read) :
     wdf1.columns = \
         wdf1.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')','')
     script = read[0]
+    script = script.upper().strip().replace(" ","")
     wdf2 = wdf1[wdf1['column1.symbol'] == script]
     wdf2_total_rows = wdf2.shape[0]
     if wdf2_total_rows == 0:
@@ -26,7 +27,7 @@ def read_watchlist(read) :
     else:
         remarks = "No change compare to baseline difference"
 
-    return(ltp, change, remarks)
+    return(script, ltp, change, remarks)
 
 
 

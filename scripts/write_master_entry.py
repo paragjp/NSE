@@ -7,9 +7,10 @@ import numpy as np
 from lower_upper import lower_upper
 
 def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_order):
-    df_master= pd.read_excel('C:\\NSE\\outputs\Masters.xlsx', index_col=None)
-    df_master.columns = \
-        df_master.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
+    df_excel= pd.read_excel('C:\\NSE\\outputs\Masters.xlsx', index_col=None)
+    df_excel.columns = \
+        df_excel.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
+
     if first_order == "Y" :
         call_put= "CALL"
         buy_sell= "SELL"
@@ -39,7 +40,9 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
                                  'put_price', 'total_premium', 'cumm_premium', 'amt', 'executed', 'remarks',
                                  'kount', 'sum_amt', 'sum_qty', 'qty_strike',
                                  'cum_qty_strike','arrived_strike', 'lower_band','upper_band'])
-        master.to_excel('C:\\NSE\\outputs\Masters.xlsx', index=False)
+        result = df_excel.append(master, sort=False)
+        result.to_excel('C:\\NSE\\outputs\Masters.xlsx', index=False)
+
 
     if first_order == "N" :
        call_put = ""

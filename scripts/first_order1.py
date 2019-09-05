@@ -4,6 +4,7 @@ pd.set_option('display.max_columns', 51)
 
 def first_order1(read, dt1, dt2, time, time1):
     script = read[5]
+    script = script.upper().strip().replace(" ", "")
     buy_sell = "S"
     strike=read[1]
     lot = read[6]
@@ -11,7 +12,7 @@ def first_order1(read, dt1, dt2, time, time1):
     order1 = ["NSE", symbol, lot, 'SELL', 'LIMIT', 0, 0, 'Regular', 0, 0, 'NRML', 0]
 
 
-    fname = "FIRST" + "-" + str(dt1) + "-" + str(time) + ".xlsx"
+    fname = script+"-"+"FIRST"+"-"+str(dt1)+"-"+str(time)+".xlsx"
 
     symbol = script + str(strike) + "PE"
     order2 = ["NSE", symbol, lot, 'SELL', 'LIMIT', 0, 0, 'Regular', 0, 0, 'NRML', 0]

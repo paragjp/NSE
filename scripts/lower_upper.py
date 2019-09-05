@@ -32,8 +32,13 @@ def lower_upper():
 
     df['cum_qty_strike'] = df.groupby(['script', 'call_put'])['qty_strike'].transform(lambda x: x.expanding().sum())
     df['arrived_strike'] = df['cum_qty_strike'] / df['sum_qty']
-    df['lower_band'] = ((df.arrived_strike - (df.cumm_premium / df.kount)).where(df.call_put == 'PUT', 0))
-    df['upper_band'] = ((df.arrived_strike + (df.cumm_premium / df.kount)).where(df.call_put == 'CALL', 0))
+
+    # df['lower_band'] = ((df.arrived_strike - (df.cumm_premium / df.kount)).where(df.call_put == 'PUT', 0))
+    # df['upper_band'] = ((df.arrived_strike + (df.cumm_premium / df.kount)).where(df.call_put == 'CALL', 0))
+    df['lower_band'] = ((df.arrived_strike - (df.cumm_premium / df.kount)).where(df.call_put == 'PUT',
+                                                                                 df.arrived_strike - df.cumm_premium))
+    df['upper_band'] = ((df.arrived_strike + (df.cumm_premium / df.kount)).where(df.call_put == 'CALL',
+                                                                                 df.arrived_strike + df.cumm_premium))
     df['lower_band'] = df['lower_band'].replace(to_replace=0, method='ffill')
     df['upper_band'] = df['upper_band'].replace(to_replace=0, method='ffill')
     df.loc[df['total_premium'] == 0, ['lower_band', 'upper_band']] = 'NA'
