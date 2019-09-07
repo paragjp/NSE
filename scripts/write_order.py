@@ -11,7 +11,7 @@ def write_order(read,dt1,dt2,time,time1,ltp,change):
     script = script.upper().strip().replace(" ", "")
     buy_sell = "S"
     strike=read[1]
-    lot = read[6]
+    qty = read[2]
     normal_order=[]
     order=[]
     if float(ltp) >= float(read[1]) and abs(float(change)) >= float(read[3]):
@@ -21,7 +21,7 @@ def write_order(read,dt1,dt2,time,time1,ltp,change):
        symbol = script + str(strike) + "CE"
        fname = script+"-"+"CALL" + "-" + str(dt1) + "-" + str(time) + ".xlsx"
 
-    order = ["NSE", symbol, lot, 'SELL', 'LIMIT', 0, 0, 'Regular', 0, 0, 'NRML', 0]
+    order = ["NSE", symbol, qty, 'SELL', 'LIMIT', 0, 0, 'Regular', 0, 0, 'NRML', 0]
 
     normal_order = pd.DataFrame([order], columns=["Exchange", "Trading Symbol",
                                            "Quantity", "Buy/Sell", "Order Type",

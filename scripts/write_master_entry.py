@@ -82,6 +82,6 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
        result = df_excel.append(new, sort=False)
        result.to_excel('C:\\NSE\\outputs\Masters.xlsx', index=False)
 
-       lower_upper()
+       lower_upper(read)
 
 

@@ -7,15 +7,15 @@ def first_order1(read, dt1, dt2, time, time1):
     script = script.upper().strip().replace(" ", "")
     buy_sell = "S"
     strike=read[1]
-    lot = read[6]
+    qty = read[2]
     symbol= script+str(strike)+"CE"
-    order1 = ["NSE", symbol, lot, 'SELL', 'LIMIT', 0, 0, 'Regular', 0, 0, 'NRML', 0]
+    order1 = ["NSE", symbol, qty, 'SELL', 'LIMIT', 0, 0, 'Regular', 0, 0, 'NRML', 0]
 
 
     fname = script+"-"+"FIRST"+"-"+str(dt1)+"-"+str(time)+".xlsx"
 
     symbol = script + str(strike) + "PE"
-    order2 = ["NSE", symbol, lot, 'SELL', 'LIMIT', 0, 0, 'Regular', 0, 0, 'NRML', 0]
+    order2 = ["NSE", symbol, qty, 'SELL', 'LIMIT', 0, 0, 'Regular', 0, 0, 'NRML', 0]
     first_order = pd.DataFrame([order1, order2], columns=["Exchange", "Trading Symbol",
                                            "Quantity", "Buy/Sell", "Order Type",
                                            "Limit Price", "Trigger Price", "Complexity",
