@@ -26,8 +26,16 @@ def lower_upper(read):
     df['put_kount']=\
      df.loc[df["total_premium"] > 0].groupby(["script"])['call_put'].apply(lambda x: np.cumsum(x == 'PUT')).replace(0,1)
 
-    df['lower_band'] = df.arrived_strike - (df.cumm_premium / df.put_kount)
-    df['upper_band'] = df.arrived_strike + (df.cumm_premium / df.call_kount)
+    df['ct'] = df['total_premium'].groupby(df['script']['call_put']).cumsum()
+    df['x'] = df['qty'].mul(df['cp'].eq('CALL')).groupby(df['script']).cumsum()
+    df['y'] = df['qty'].mul(df['cp'].eq('PUT')).groupby(df['script']).cumsum()
+    df['x'] = df['x'].replace(0, df['y'])
+    df['y'] = df['y'].replace(0, df['x'])
+    df['c1'] = df['ct'] / df['x']
+    df['p1'] = df['ct'] / df['y']
+
+    df['lower_band'] = df.arrived_strike - df['c1']
+    df['upper_band'] = df.arrived_strike + df['p1']
 
     df['lower_band'] = df['lower_band'].replace(to_replace=0, method='ffill')
     df['upper_band'] = df['upper_band'].replace(to_replace=0, method='ffill')
