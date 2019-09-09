@@ -47,7 +47,7 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
        call_price = 0.00
        put_price = 0.00
        executed = "Y"
-       maxster=[]
+       master=[]
        new=[]
        df_excel=[]
        if  float(ltp) >= float(read[1]) and abs(change) >= float(read[3]) :
@@ -61,6 +61,9 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
             call_put = "CALL"
             master  = [dt2, time1, read[0], read[1], ltp, read[3], change, read[2], call_put,
                        buy_sell, call_price, put_price, 0.00, 0.00, 0.00, executed, remarks, 0.00, 0.00, 0.00, 0.00]
+       else :
+           print("SCRIPT : ", script)
+           sys.exit("Changes are less than defined in a basefile")
 
        df_excel = pd.read_excel('C:\\NSE\\outputs\Masters.xlsx', index_col=None)
        df_excel.columns = \
