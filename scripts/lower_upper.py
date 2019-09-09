@@ -19,33 +19,36 @@ def lower_upper():
     df['kount'] = df.groupby(['script', 'call_put']).cumcount() + 1
     df['sum_amt'] = df.groupby(['script', 'call_put'])['amt'].transform(lambda x: x.expanding().sum())
     df['sum_qty'] = df.groupby(['script', 'call_put'])['qty'].transform(lambda x: x.expanding().sum())
-    df['qty_strike'] = df['base_strike'] * df['qty']
-    df['cum_qty_strike'] = df.groupby(['script', 'call_put'])['qty_strike'].transform(lambda x: x.expanding().sum())
-    df['arrived_strike'] = df['cum_qty_strike'] / df['sum_qty']
-    # df['call_kount']=\
-    # df.loc[df["total_premium"]> 0].groupby(["script"])['call_put'].apply(lambda x: np.cumsum(x == 'CALL')).replace(0,1)
-    # df['put_kount']=\
-    df.loc[df["total_premium"] > 0].groupby(["script"])['call_put'].apply(lambda x: np.cumsum(x == 'PUT')).replace(0, 1)
+    df['total_qty'] = df.groupby(['script'])['qty'].transform(lambda x: x.expanding().sum())
+    df['qty_x_strike'] = df['base_strike'] * df['qty']
+    df['cumm_qty_x_strike'] = df.groupby(['script', 'call_put'])['qty_x_strike'].transform(
+        lambda x: x.expanding().sum())
+    df['cumm_call_qty'] = df['qty'].mul(df['call_put'].eq('CALL')).groupby(df['script']).cumsum()
+    df['cumm_put_qty'] = df['qty'].mul(df['call_put'].eq('PUT')).groupby(df['script']).cumsum()
+    df['cumm_call_qty'] = df['cumm_call_qty'].replace(0, df['cumm_put_qty'])
+    df['cumm_put_qty'] = df['cumm_put_qty'].replace(0, df['cumm_call_qty'])
 
-    df['ct'] = df.groupby(['script'])['amt'].transform(lambda x: x.expanding().sum())
+    df['arrived_call_strike'] = df['cumm_qty_x_strike'] / df['cumm_call_qty'].where(df['call_put'] == "CALL")
+    df['arrived_put_strike'] = df['cumm_qty_x_strike'] / df['cumm_put_qty'].where(df['call_put'] == "PUT")
 
-    df['x'] = df['qty'].mul(df['call_put'].eq('CALL')).groupby(df['script']).cumsum()
-    df['y'] = df['qty'].mul(df['call_put'].eq('PUT')).groupby(df['script']).cumsum()
-    df['x'] = df['x'].replace(0, df['y'])
-    df['y'] = df['y'].replace(0, df['x'])
-    df['c1'] = df['ct'] / df['x']
-    df['p1'] = df['ct'] / df['y']
+    # df['arrived_put_strike'] = df['arrived_put_strike'].replace(0, df['arrived_call_strike'])
+    # df['arrived_call_strike'] = df['arrived_call_strike'].replace(0, df['arrived_put_strike'])
+    df['arrived_call_strike'] = df['arrived_call_strike'].fillna(method='ffill')
+    df['arrived_put_strike'] = df['arrived_put_strike'].fillna(method='ffill')
+    # df['arrived_call_strike'] = df['arrived_put_strike'].fillna(df['arrived_call_strike'])
+    # df['arrived_put_strike'] = df['arrived_put_strike'].fillna(df['arrived_call_strike'])
+    df['cumm_amt'] = df.groupby(['script'])['amt'].transform(lambda x: x.expanding().sum())
+    df['upper_band'] = df['arrived_call_strike'] + (df['cumm_amt'] / df['cumm_call_qty'])
+    df['lower_band'] = df['arrived_put_strike'] - (df['cumm_amt'] / df['cumm_put_qty'])
+    df = df.fillna('NA')
 
-    df['lower_band'] = df.arrived_strike - df['p1']
-    df['upper_band'] = df.arrived_strike + df['c1']
-
-    df['lower_band'] = df['lower_band'].replace(to_replace=0, method='ffill')
-    df['upper_band'] = df['upper_band'].replace(to_replace=0, method='ffill')
-    df.loc[df['total_premium'] == 0, ['lower_band', 'upper_band']] = 'NA'
-
-    df1 = df[['date','time','script','base_strike','ltp','base_change','current_change','qty','call_put','buy_sell',
-              'call_price','put_price', 'total_premium', 'cumm_premium', 'amt', 'executed', 'remarks',
-              'kount', 'arrived_strike','lower_band','upper_band']]
-    df.loc[df['total_premium'] == 0, ['lower_band', 'upper_band']] = 'NA'
+    df.loc[df['total_premium'] == 0, ['cumm_premium', 'amt', 'arrived_call_strike', 'arrived_put_strike',
+                                       'lower_band', 'upper_band']] = 'NA'
+    df1 = df[['date', 'time', 'script', 'base_strike', 'ltp', 'base_change', 'current_change', 'qty',
+               'call_put', 'buy_sell', 'call_price', 'put_price', 'total_premium', 'cumm_premium', 'amt',
+               'executed', 'remarks', 'kount', 'arrived_call_strike', 'arrived_put_strike', 'upper_band',
+               'lower_band']]
+    #df1.loc[df['total_premium']==0,['cumm_premium','amt','arrived_call_strike','arrived_put_strike',
+    #                              'lower_band', 'upper_band']] = 'NA'
     # df.drop(['call_kount','put_kount','ct','x','y','c1','p1'], axis=1, inplace=True)
     df1.to_excel('C:\\NSE\\outputs\Masters.xlsx', index=False)
