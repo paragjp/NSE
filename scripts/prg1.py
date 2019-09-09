@@ -12,6 +12,7 @@ from write_master_entry import write_master_entry
 from write_order import write_order
 from format_masters import format_masters
 
+
 r1 = pd.read_csv('C:\\NSE\\inputs\\basefile.csv')
 r1.columns = \
     r1.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
@@ -21,7 +22,6 @@ for index, row in r1.iterrows():
     if len(read) == 0:
         print("Reading Baseline File is completed")
         sys.exit("program completed")
-    print(read)
 
     today = dt.datetime.now().strftime("%Y%m%d").upper()
 
@@ -56,7 +56,8 @@ for index, row in r1.iterrows():
     elif abs(change) > float(read[3]):
          write_order(read,dt1,dt2,time,time1,ltp,change)
 
-    print("index : ", index)
+
+#    print("index : ", index)
     write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_order)
 
     format_masters()

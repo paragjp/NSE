@@ -19,8 +19,7 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
         executed = "Y"
         remarks = "First CALL Order"
         master1=[dt2, time1, read[0], read[1], ltp, read[3], change, read[2], call_put,
-                buy_sell, call_price, put_price, 0.00, 0.00, 0.00, executed, remarks, 0.00, 0.00, 0.00, 0.00,
-                0.00, 0.00, 0.00, 0.00]
+                buy_sell, call_price, put_price, 0.00, 0.00, 0.00, executed, remarks, 1.00, 0.00, 0.00, 0.00]
 
         call_put = "PUT"
         buy_sell = "SELL"
@@ -29,8 +28,7 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
         executed = "Y"
         remarks = "First PUT Order"
         master2=[dt2, time1, read[0],read[1], ltp, read[3], change,read[2],call_put,
-                buy_sell, call_price, put_price, 0.00, 0.00, 0.00, executed, remarks, 0.00, 0.00, 0.00, 0.00,
-                0.00, 0.00, 0.00, 0.00]
+                buy_sell, call_price, put_price, 0.00, 0.00, 0.00, executed, remarks, 1.00, 0.00, 0.00, 0.00]
 
         master=[]
         master= pd.DataFrame([master1,master2], columns =
@@ -38,8 +36,7 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
                                  'base_change', 'current_change', 'qty',
                                  'call_put','buy_sell','call_price',
                                  'put_price', 'total_premium', 'cumm_premium', 'amt', 'executed', 'remarks',
-                                 'kount', 'sum_amt', 'sum_qty', 'qty_strike',
-                                 'cum_qty_strike','arrived_strike', 'lower_band','upper_band'])
+                                 'kount', 'arrived_strike', 'lower_band','upper_band'])
         result = df_excel.append(master, sort=False)
         result.to_excel('C:\\NSE\\outputs\Masters.xlsx', index=False)
 
@@ -57,14 +54,13 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
             remarks = "PUT Order"
             call_put = "PUT"
             master  = [dt2, time1, read[0], read[1], ltp, read[3], change, read[2], call_put,
-                       buy_sell, call_price, put_price, 0.00, 0.00, 0.00, executed, remarks, 0.00, 0.00, 0.00, 0.00,
-                       0.00, 0.00, 0.00, 0.00]
+                       buy_sell, call_price, put_price, 0.00, 0.00, 0.00, executed, remarks, 0.00, 0.00, 0.00, 0.00]
+
        elif float(ltp) <= float(read[1]) and abs(change) >= float(read[3]) :
             remarks = "CALL Order"
             call_put = "CALL"
             master  = [dt2, time1, read[0], read[1], ltp, read[3], change, read[2], call_put,
-                       buy_sell, call_price, put_price, 0.00, 0.00, 0.00, executed, remarks, 0.00, 0.00, 0.00, 0.00,
-                       0.00, 0.00, 0.00, 0.00]
+                       buy_sell, call_price, put_price, 0.00, 0.00, 0.00, executed, remarks, 0.00, 0.00, 0.00, 0.00]
 
        df_excel = pd.read_excel('C:\\NSE\\outputs\Masters.xlsx', index_col=None)
        df_excel.columns = \
@@ -77,11 +73,11 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
                                      'base_change', 'current_change', 'qty',
                                      'call_put','buy_sell','call_price',
                                      'put_price', 'total_premium', 'cumm_premium', 'amt', 'executed', 'remarks',
-                                     'kount', 'sum_amt', 'sum_qty', 'qty_strike',
-                                     'cum_qty_strike','arrived_strike', 'lower_band','upper_band'])
+                                     'kount', 'arrived_strike', 'lower_band','upper_band'])
        result = df_excel.append(new, sort=False)
+       result['kount'] = result.groupby(['script', 'call_put']).cumcount() + 1
        result.to_excel('C:\\NSE\\outputs\Masters.xlsx', index=False)
 
-       lower_upper(read)
+       lower_upper()
 
 
