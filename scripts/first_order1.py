@@ -1,13 +1,17 @@
 import datetime as dt
 import pandas as pd
 pd.set_option('display.max_columns', 51)
+from disp_message import disp_message
+
 
 def first_order1(read, dt1, dt2, time, time1):
+    msg=""
     script = read[5]
     script = script.upper().strip().replace(" ", "")
     buy_sell = "S"
     strike=read[1]
-    qty = read[2]
+    qty = read[2]*read[6]
+
     symbol= script+str(strike)+"CE"
     order1 = ["NSE", symbol, qty, 'SELL', 'LIMIT', 0, 0, 'Regular', 0, 0, 'NRML', 0]
 
@@ -22,4 +26,13 @@ def first_order1(read, dt1, dt2, time, time1):
                                            "Target Points", "Stoploss Points", "Intraday / Delivery",
                                            "Trailing Stoploss"])
     first_order.to_excel('C:\\NSE\\outputs\\' + fname, index=False)
+
+    dt1 = dt.datetime.now().strftime("%Y""%m""%d")
+    time1 = dt.datetime.now().strftime('%H:%M:%S')
+    dt2 = dt1 + time1
+    t1 = dt.datetime.strptime(dt2, '%Y%m%d%H:%M:%S')
+    dt_time = t1.strftime("%d %b %Y %H:%M:%S")
+    msg = str(dt_time)+" "+script.upper()+" FIRST "+"Order Generated in NSE for Qty "+str(qty)+" at Strike Price "+str(strike)+" Pl check"
+    msgtype=2
+    disp_message(msg,msgtype)
 

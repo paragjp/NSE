@@ -18,7 +18,8 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
         put_price = 0.00
         executed = "Y"
         remarks = "First CALL Order"
-        master1=[dt2,time1,read[0],read[1],ltp,read[3],change,read[2],
+        qty=qty = read[2]*read[6]
+        master1=[dt2,time1,read[0],read[1],ltp,read[3],change,qty,
                  call_put,buy_sell,call_price,put_price,0.00,0.00,0.00,
                  executed, remarks,1.00,0.00,0.00,0.00,
                  0.00]
@@ -29,7 +30,7 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
         put_price = 0.00
         executed = "Y"
         remarks = "First PUT Order"
-        master2=[dt2,time1,read[0],read[1],ltp,read[3],change,read[2],
+        master2=[dt2,time1,read[0],read[1],ltp,read[3],change,qty,
                  call_put,buy_sell,call_price,put_price,0.00,0.00,0.00,
                  executed,remarks,1.00,0.00,0.00,0.00,
                  0.00]
@@ -54,10 +55,11 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
        master=[]
        new=[]
        df_excel=[]
+       qty = read[2]*read[6]
        if  float(ltp) >= float(read[1]) and abs(change) >= float(read[3]) :
             remarks = "PUT Order"
             call_put = "PUT"
-            master  = [dt2, time1,read[0],read[1],ltp,read[3],change,read[2],
+            master  = [dt2, time1,read[0],read[1],ltp,read[3],change,qty,
                        call_put,buy_sell,call_price,put_price,0.00,0.00,0.00,
                        executed, remarks,0.00,0.00,0.00,0.00,
                        0.00]
@@ -65,7 +67,7 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
        elif float(ltp) <= float(read[1]) and abs(change) >= float(read[3]) :
             remarks = "CALL Order"
             call_put = "CALL"
-            master  = [dt2,time1,read[0],read[1],ltp,read[3],change,read[2],
+            master  = [dt2,time1,read[0],read[1],ltp,read[3],change,qty,
                        call_put,buy_sell,call_price,put_price,0.00,0.00,0.00,
                        executed, remarks,0.00,0.00,0.00,0.00,
                        0.00]
