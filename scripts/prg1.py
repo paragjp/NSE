@@ -13,7 +13,7 @@ from write_order import write_order
 from format_masters import format_masters
 from disp_message import disp_message
 from lower_upper import lower_upper
-from write_to_html_file import write_to_html_file
+import write_to_html_file
 
 
 r1 = pd.read_csv('C:\\NSE\\inputs\\basefile.csv')
@@ -24,7 +24,7 @@ for index, row in r1.iterrows():
 
     if len(read) == 0:
         print("Reading Baseline File is completed")
-        sys.exit("program completed")
+        sys.exit("Program completed ...")
 
     today = dt.datetime.now().strftime("%Y%m%d").upper()
 
