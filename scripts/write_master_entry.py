@@ -72,7 +72,7 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
                        executed, remarks,0.00,0.00,0.00,0.00,
                        0.00]
        else :
-           print("SCRIPT : ", script)
+           print("SCRIPT : ", read[0])
            sys.exit("Changes are less than defined in a basefile")
 
        df_excel = pd.read_excel('C:\\NSE\\outputs\Masters.xlsx', index_col=None)
