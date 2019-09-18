@@ -13,10 +13,10 @@ from write_order import write_order
 from format_masters import format_masters
 from disp_message import disp_message
 from lower_upper import lower_upper
-import write_to_html_file
+from write_to_html_file import write_to_html_file
 
 
-r1 = pd.read_csv('C:\\NSE\\inputs\\basefile.csv')
+r1 = pd.read_excel('C:\\NSE\\inputs\\basefile.xlsx')
 r1.columns = \
     r1.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
 for index, row in r1.iterrows():
@@ -61,21 +61,21 @@ for index, row in r1.iterrows():
     else:
         lower_upper()
         format_masters()
-        write_to_html_file
+        # write_to_html_file
         dt1 = dt.datetime.now().strftime("%Y""%m""%d")
         time1 = dt.datetime.now().strftime('%H:%M:%S')
         dt2 = dt1 + time1
         t1 = dt.datetime.strptime(dt2, '%Y%m%d%H:%M:%S')
         dt_time = t1.strftime("%d %b %Y %H:%M:%S")
         msg = str(dt_time)+ " NO Order Generated as change is not significant for "+script.upper()+" LTP:"+\
-              str(ltp)+" Base Strike:"+str(read[1])+" Change:"+str(change)+ " Pl check"
+              str(ltp)+" Strike:"+str(read[1])+" Change:"+str(change)+ " Pl check"
         msgtype = 3
         disp_message(msg, msgtype)
-        sys.exit("No Order is generated")
+        sys.exit("No Order is generated...")
 
     write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_order)
     format_masters()
-    write_to_html_file
+    write_to_html_file()
 
 print("Program Finished ...")
 

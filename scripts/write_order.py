@@ -28,13 +28,15 @@ def write_order(read,dt1,dt2,time,time1,ltp,change):
     df.columns = \
         df.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
     df = df[df['remarks'] != 'Average']
-    previous_call_change=df[(df.script == script)].set_index('current_change')['call_put'].eq('CALL')[::-1].idxmax()+prevdiff
-    previous_put_change=df[(df.script == script)].set_index('current_change')['call_put'].eq('PUT')[::-1].idxmax()+prevdiff
+#    previous_call_change=df[(df.script == script)].set_index('current_change')['call_put'].eq('CALL')[::-1].idxmax()+prevdiff
+#    previous_put_change=df[(df.script == script)].set_index('current_change')['call_put'].eq('PUT')[::-1].idxmax()+prevdiff
 
-    if float(ltp) >= float(read[1]) and abs(float(change)) >= float(read[3]) and  abs(float(change)) >= float(previous_put_change):
+#    if float(ltp) >= float(read[1]) and abs(float(change)) >= float(read[3]) and  abs(float(change)) >= float(previous_put_change):
+    if float(ltp) >= float(read[1]) and abs(float(change)) >= float(read[3]):
        symbol= script+str(strike)+"PE"
        fname = script+"-"+"PUT"+"-"+dt1+"-"+time+".xlsx"
-    elif float(ltp) <= float(read[1]) and abs(float(change)) >= float(read[3]) and abs(float(change)) >= float(previous_call_change):
+#    elif float(ltp) <= float(read[1]) and abs(float(change)) >= float(read[3]) and abs(float(change)) >= float(previous_call_change):
+    elif float(ltp) <= float(read[1]) and abs(float(change)) >= float(read[3]):
        symbol = script + str(strike) + "CE"
        fname = script+"-"+"CALL" + "-" + str(dt1) + "-" + str(time) + ".xlsx"
     else:
@@ -47,8 +49,7 @@ def write_order(read,dt1,dt2,time,time1,ltp,change):
         t1 = dt.datetime.strptime(dt2, '%Y%m%d%H:%M:%S')
         dt_time = t1.strftime("%d %b %Y %H:%M:%S")
         msg = str(dt_time)+ " "+script.upper()+" NO Order Generated in NSE as change is not significant"\
-              +" Pl check"+" Current Change :"+str(change)+" Change Required to Generate an Order (CALL/PUT) :"\
-              +str(previous_call_change)+" "+str(previous_put_change)
+              +" Pl check"+" Current Change :"+str(change)+" New Strike :"+str(read[1])
         msgtype = 3
         disp_message(msg, msgtype)
         sys.exit("No Order is generated")

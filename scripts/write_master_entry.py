@@ -5,6 +5,7 @@ import datetime as dt
 import numpy as np
 
 from lower_upper import lower_upper
+from myround import myround
 
 def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_order):
     df_excel= pd.read_excel('C:\\NSE\\outputs\Masters.xlsx', index_col=None)
@@ -56,6 +57,19 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
        new=[]
        df_excel=[]
        qty = read[2]*read[6]
+       new_strike=0
+       read1=[]
+
+       new_strike = myround(float(ltp), int(read[8]))
+       r1 = pd.read_excel('C:\\NSE\\inputs\\basefile.xlsx')
+       r1.columns = \
+           r1.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
+       read1=read
+       read1[1]= new_strike
+       r1.loc[(r1['script'] == read[0])] = read1
+       r1.to_excel('C:\\NSE\\inputs\\basefile.xlsx', index=False)
+
+
        if  float(ltp) >= float(read[1]) and abs(change) >= float(read[3]) :
             remarks = "PUT Order"
             call_put = "PUT"
@@ -64,6 +78,7 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
                        executed, remarks,0.00,0.00,0.00,0.00,
                        0.00]
 
+
        elif float(ltp) <= float(read[1]) and abs(change) >= float(read[3]) :
             remarks = "CALL Order"
             call_put = "CALL"
@@ -71,6 +86,7 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
                        call_put,buy_sell,call_price,put_price,0.00,0.00,0.00,
                        executed, remarks,0.00,0.00,0.00,0.00,
                        0.00]
+
        else :
            print("SCRIPT : ", read[0])
            sys.exit("Changes are less than defined in a basefile")
@@ -89,7 +105,6 @@ def write_master_entry(dt1, dt2, time, time1, read, ltp, change, remarks, first_
        result = df_excel.append(new, sort=False)
        result['kount'] = result.groupby(['script', 'call_put']).cumcount() + 1
        result.to_excel('C:\\NSE\\outputs\Masters.xlsx', index=False)
-
        lower_upper()
 
 

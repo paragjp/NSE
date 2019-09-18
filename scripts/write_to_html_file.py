@@ -4,8 +4,14 @@ pd.set_option('display.width', 2000)
 pd.set_option('display.float_format', '{:20,.2f}'.format)
 pd.set_option('display.max_colwidth', -1)
 
+def write_to_html_file():
+    df = []
+    df = pd.read_excel('C:\\NSE\\outputs\Masters.xlsx', index_col=None)
+    df.columns = \
+        df.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
+    write_to_html_file1(df, 'Master Log File', 'c:\\NSE\\outputs\\Masters.html')
 
-def write_to_html_file(df, title='', filename='out.html'):
+def write_to_html_file1(df, title='', filename='out.html'):
     '''
     Write an entire dataframe to an HTML file with nice formatting.
     '''
@@ -60,8 +66,3 @@ def write_to_html_file(df, title='', filename='out.html'):
         f.write(result)
 
 
-df = []
-df = pd.read_excel('C:\\NSE\\outputs\Masters.xlsx', index_col=None)
-df.columns = \
-    df.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
-write_to_html_file(df, 'Master Log File', 'c:\\NSE\\outputs\\Masters.html')
