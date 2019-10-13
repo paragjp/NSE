@@ -4,7 +4,7 @@ pd.set_option('display.max_columns', 51)
 from disp_message import disp_message
 
 
-def first_order1(read, dt1, dt2, time, time1):
+def first_order1(read, dt1, dt2, time, time1,ltp):
     msg=""
     script = read[5]
     script = script.upper().strip().replace(" ", "")
@@ -26,6 +26,14 @@ def first_order1(read, dt1, dt2, time, time1):
                                            "Target Points", "Stoploss Points", "Intraday / Delivery",
                                            "Trailing Stoploss"])
     first_order.to_excel('C:\\NSE\\outputs\\' + fname, index=False)
+
+    r1 = pd.read_excel('C:\\NSE\\inputs\\basefile.xlsx')
+    r1.columns = \
+        r1.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
+    r1['strike']=round(float(ltp),2)
+    r1['lastupd_dt']=dt2
+    r1['lastupd_time']=time1
+    r1.to_excel('C:\\NSE\\inputs\\basefile.xlsx', index=False)
 
     dt1 = dt.datetime.now().strftime("%Y""%m""%d")
     time1 = dt.datetime.now().strftime('%H:%M:%S')

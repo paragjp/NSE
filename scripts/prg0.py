@@ -13,10 +13,10 @@ if os.path.isfile(filename):
     os.remove(filename)
 
 masterdf = pd.DataFrame(columns=['date', 'time', 'script','base_strike','ltp',
-                                 'base_change', 'current_change', 'qty',
+                                 'base_change', 'current_change', 'qty','type',
                                  'call_put','buy_sell','call_price',
                                  'put_price', 'total_premium', 'cumm_premium', 'amt', 'executed', 'remarks',
-                                 'kount', 'call_arrived_strike','put_arrived_strike','upper_band','lower_band'])
+                                 'kount','profit', 'loss', 'arrived_call_strike','arrived_put_strike','upper_band','lower_band'])
 masterdf.to_excel("C:\\NSE\\outputs\Masters.xlsx", startrow=0, index=False)
 
 x1=dt.datetime.now().strftime("%d %b %Y %H:%M:%S")

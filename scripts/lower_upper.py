@@ -45,7 +45,7 @@ def lower_upper():
     df.loc[df['total_premium'] == 0, ['cumm_premium', 'amt', 'arrived_call_strike', 'arrived_put_strike',
                                        'lower_band', 'upper_band']] = 'NA'
     df1 = df[['date', 'time', 'script', 'base_strike', 'ltp', 'base_change', 'current_change', 'qty',
-               'call_put', 'buy_sell', 'call_price', 'put_price', 'total_premium', 'cumm_premium', 'amt',
+               'type1','call_put', 'buy_sell', 'call_price', 'put_price', 'profit','loss','total_premium', 'cumm_premium', 'amt',
                'executed', 'remarks', 'kount', 'arrived_call_strike', 'arrived_put_strike', 'upper_band',
                'lower_band']]
     #df1.loc[df['total_premium']==0,['cumm_premium','amt','arrived_call_strike','arrived_put_strike',

@@ -55,7 +55,7 @@ for index, row in r1.iterrows():
     print(read)
 
     if first_order == "Y" :
-       first_order1(read, dt1, dt2, time, time1)
+       first_order1(read, dt1, dt2, time, time1,ltp)
     elif abs(change) >= float(read[3]):
          write_order(read,dt1,dt2,time,time1,ltp,change)
     else:

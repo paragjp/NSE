@@ -1,14 +1,11 @@
-import threading
-from disp_message import disp_message
+import datetime as dt
+## program to generate a simple toast notifier
+from win10Toast import ToastNotifier
+## instantiating the class
+dt1 = dt.datetime.now().strftime("%Y""%m""%d")
+dt2 = dt.datetime.now().strftime("%d-%b-%Y")
 
-msg =" This is a test message"
-msgtype = 1
-
-t1 = threading.Thread(target=disp_message, args=(msg,msgtype,))
-t1.start()
-t1.join()
-
-for i in range(100000):
-    print(i)
-disp_message(msg,msgtype)
-print("Done!")
+time1 = dt.datetime.now().strftime('%H:%M:%S')
+time = time1.replace(':','')
+n = ToastNotifier()
+n.show_toast("Test Message","Notification body"+dt1+" "+time1,duration=15)
