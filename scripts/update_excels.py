@@ -81,10 +81,22 @@ def update_excels(script,dt2,time1,totalcost,celtp,peltp,msg3):
         ],
         default=df['remarks']
     )
-    df.style.format({'percentage': '{:,.2%}'.format})
-    df=df.round({"call": 2, "put": 2, "total": 2, "celtp": 2, "lastce":2, "lastpe":2, "last_total":2,"loss_profit":2, "percentage":2})
-    df1= pd.DataFrame(df, columns=['date','script','expiry_date','cestrike','call','pestrike','put','total',
-                                  'loss','profit','upddt','updtime','lastce','lastpe','last_total','loss_profit','percentage','remarks'])
+    # df.style.format({'percentage': '{:,.2%}'.format})
+
+    df2 = pd.read_excel('C:\\NSE\\inputs\\watchlist.xlsx', index_col=None)
+    df2.columns = \
+        df2.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
+    df3 = pd.merge(df, df2[['column1.symbol', 'column1.ltp']], how='left', left_on=['script'],
+                   right_on=['column1.symbol'])
+    df3['ltp'] = df3['column1.ltp']
+    df3.drop(['column1.symbol', 'column1.ltp'], inplace=True, axis=1)
+    df = df3
+
+    df=df.round({"spot":2, "call": 2, "put": 2, "total": 2, "ltp":2, "celtp": 2, "lastce":2, "lastpe":2, "last_total":2,"loss_profit":2, "percentage":2})
+
+    df1= pd.DataFrame(df, columns=['date','script','expiry_date','spot','cestrike','call','pestrike','put','total',
+                                  'loss','profit','upddt','updtime', 'ltp','lastce','lastpe','last_total','loss_profit','percentage','remarks'])
+    df1.sort_values(by=['script'], ascending=[True], inplace=True)
     df1.to_excel('C:\\NSE\\inputs\\cepebasefile.xlsx', index=False)
 
 

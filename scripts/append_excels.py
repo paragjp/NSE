@@ -21,8 +21,8 @@ def append_excels(script,dt2,time1,totalcost,celtp,peltp):
     df3 = df2.append(df1, ignore_index=True)
 
 
-    df3 = pd.DataFrame(df3, columns=['date', 'script', 'expiry_date', 'cestrike', 'call', 'pestrike', 'put', 'total',
-                                     'loss', 'profit', 'upddt', 'updtime', 'lastce', 'lastpe', 'last_total',
+    df3 = pd.DataFrame(df3, columns=['date', 'script', 'expiry_date', 'spot','cestrike', 'call', 'pestrike', 'put', 'total',
+                                     'loss', 'profit', 'upddt', 'updtime','ltp','lastce', 'lastpe', 'last_total',
                                      'loss_profit', 'percentage','remarks'])
     df3.sort_values(by=['script', 'upddt', 'updtime'], ascending=[True, False, False], inplace=True)
     df3 = df3.reset_index(drop=True)

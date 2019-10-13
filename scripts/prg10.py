@@ -13,8 +13,10 @@ from show_message import show_message
 from update_excels import update_excels
 from format_excels_cepe import format_excels_cepe
 from append_excels import append_excels
+from refresh_excel import refresh_excel
+from df_to_html import df_to_html
 
-
+refresh_excel()
 r1 = pd.read_excel('C:\\NSE\\inputs\\cepebasefile.xlsx')
 r1.columns = \
     r1.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
@@ -33,7 +35,7 @@ for index, row in r1.iterrows():
         print("Expiry Date :", read[2])
         sys.exit("Expiry Date is over for above script check CEPEbasefile.xlsx")
 
-    refresh_excel_oi()
+    # refresh_excel_oi()
     dt1 = dt.datetime.now().strftime("%Y""%m""%d")
     dt2 = dt.datetime.now().strftime("%d-%b-%Y")
 
@@ -66,13 +68,10 @@ for index, row in r1.iterrows():
     update_excels(script,dt2,time1,totalcost,celtp,peltp,msg3)
 
 append_excels(script,dt2,time1,totalcost,celtp,peltp)
-
-
 #
 format_excels_cepe()
-dttime.sleep(5)
-    # write_to_html_file()
-
+dttime.sleep(3)
+df_to_html()
 print("Program Finished ...")
 
 #format_masters()

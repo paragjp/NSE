@@ -7,21 +7,16 @@
   <component name="ChangeListManager">
     <list default="true" id="cff6e59c-87b1-4168-a570-85c62aa4397e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Options Payoff Calculator v4.0.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Options Payoff Calculator v4.0.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inputs/basefile.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/inputs/basefile.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inputs/swing1.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/inputs/swing1.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inputs/OI.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/inputs/OI.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inputs/cepebasefile.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/inputs/cepebasefile.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inputs/watchlist.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/inputs/watchlist.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Masters.html" beforeDir="false" afterPath="$PROJECT_DIR$/outputs/Masters.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/Masters.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/outputs/Masters.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/SBIN-CALL-20190919-005440.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/SBIN-FIRST-20190919-005233.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputs/SBIN-PUT-20190924-194146.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/first_order1.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/first_order1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/lower_upper.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/lower_upper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/prg0.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/prg0.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/prg1.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/prg1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/toto.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/toto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/write_master_entry.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/write_master_entry.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs/CEPELog.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/outputs/CEPELog.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/append_excels.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/append_excels.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/format_excels_cepe.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/format_excels_cepe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/prg10.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/prg10.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/read_cepe.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/read_cepe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/refresh_excel.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/refresh_excel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/update_excels.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/update_excels.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,11 +56,11 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\NSE\scripts" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\NSE\scripts\archives" />
+      <recent name="C:\NSE\scripts" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\NSE\scripts" />
     </key>
   </component>
@@ -385,11 +380,6 @@
           <url>file://$PROJECT_DIR$/scripts/write_order.py</url>
           <line>15</line>
           <option name="timeStamp" value="140" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/scripts/prg10.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="151" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
